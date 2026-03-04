@@ -2,6 +2,7 @@
 
 @theme inline {
   --color-background: #080B12;
+  --color-foreground: #ffffff;
   --color-surface: #0E131F;
   --color-elevated: rgba(14, 19, 31, 0.7);
   --color-primary: #00F0FF;
@@ -15,6 +16,11 @@
 }
 
 /* ---- Base ---- */
+:root {
+  --background: #080B12;
+  --foreground: #ffffff;
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
