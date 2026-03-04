@@ -5,7 +5,15 @@ import { formatPercent } from "@/lib/utils";
 import { Search, Star, TrendingUp, TrendingDown, Loader2 } from "lucide-react";
 import { useState } from "react";
 
-export function MarketsPanel() {
+interface MarketsPanelProps {
+  selectedTokenId?: string;
+  onSelectToken?: (token: any) => void;
+}
+
+export function MarketsPanel({
+  selectedTokenId,
+  onSelectToken,
+}: MarketsPanelProps) {
   const [search, setSearch] = useState("");
   const { data: tokens, isLoading } = useCryptoData();
 
@@ -53,7 +61,12 @@ export function MarketsPanel() {
           filtered.map((token) => (
             <button
               key={token.id}
-              className="w-full flex items-center gap-3 px-4 py-3 hover:bg-white/3 transition-colors text-left border-b border-border/50 group"
+              onClick={() => onSelectToken?.(token)}
+              className={`w-full flex items-center gap-3 px-4 py-3 hover:bg-white/3 transition-colors text-left border-b border-border/50 group ${
+                selectedTokenId === token.id
+                  ? "bg-primary/5 border-l-2 border-l-primary"
+                  : ""
+              }`}
             >
               {/* Icon */}
               <div className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center shrink-0 overflow-hidden">

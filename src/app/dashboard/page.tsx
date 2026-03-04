@@ -1,9 +1,11 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import { useState, useMemo } from "react";
 import { DashboardNav } from "@/components/dashboard/dashboard-nav";
 import { MarketsPanel } from "@/components/dashboard/markets-panel";
 import { SwapCard } from "@/components/dashboard/swap-card";
+import { useCryptoData, CryptoData } from "@/hooks/use-crypto-data";
 
 // Lazy load heavy chart component
 const ChartArea = dynamic(
@@ -37,6 +39,18 @@ const TransactionHistory = dynamic(
 );
 
 export default function DashboardPage() {
+  const { data: tokens } = useCryptoData();
+  const [userSelectedToken, setUserSelectedToken] = useState<CryptoData | null>(
+    null,
+  );
+
+  // Derive the active token: user choice > default (ETH) > first in list
+  const selectedToken = useMemo(() => {
+    if (userSelectedToken) return userSelectedToken;
+    if (tokens.length === 0) return null;
+    return tokens.find((t) => t.symbol.toLowerCase() === "eth") || tokens[0];
+  }, [userSelectedToken, tokens]);
+
   return (
     <div className="min-h-screen bg-background">
       <DashboardNav />
@@ -48,24 +62,31 @@ export default function DashboardPage() {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 h-full">
             {/* Left Column: Markets (Sticky on desktop) */}
             <div className="lg:col-span-3 lg:col-start-1 lg:sticky lg:top-[88px] h-[400px] lg:h-[calc(100vh-112px)]">
-              <MarketsPanel />
+              <MarketsPanel
+                selectedTokenId={selectedToken?.id}
+                onSelectToken={setUserSelectedToken}
+              />
             </div>
 
             {/* Center Column: Chart & Action */}
             <div className="lg:col-span-6 lg:col-start-4 flex flex-col gap-6 min-h-[400px]">
               <div className="bg-[#080B12]/40 rounded-2xl p-1 shrink-0 h-[400px] lg:h-[500px]">
-                <ChartArea />
+                <ChartArea selectedToken={selectedToken} />
               </div>
 
               <div className="w-full max-w-md mx-auto xl:hidden pb-10">
-                <SwapCard />
+                <SwapCard
+                  initialFromToken={selectedToken?.symbol.toUpperCase()}
+                />
               </div>
             </div>
 
             {/* Right Column: Order/Swap & History */}
             <div className="lg:col-span-3 lg:col-start-10 lg:sticky lg:top-[88px] flex flex-col gap-6 h-auto lg:h-[calc(100vh-112px)]">
               <div className="hidden xl:block shrink-0">
-                <SwapCard />
+                <SwapCard
+                  initialFromToken={selectedToken?.symbol.toUpperCase()}
+                />
               </div>
               <div className="flex-1 min-h-[300px]">
                 <TransactionHistory />

@@ -10,13 +10,20 @@ import {
 } from "lucide-react";
 import { useCryptoData } from "@/hooks/use-crypto-data";
 
-export function SwapCard() {
+interface SwapCardProps {
+  initialFromToken?: string;
+}
+
+export function SwapCard({ initialFromToken }: SwapCardProps) {
   const { data: tokens, isLoading } = useCryptoData();
-  const [fromToken, setFromToken] = useState("ETH");
+  const [fromTokenState, setFromTokenState] = useState<string | null>(null);
   const [toToken, setToToken] = useState("USDC");
   const [amount, setAmount] = useState("1.0");
   const [slippage, setSlippage] = useState("0.5");
   const [showSettings, setShowSettings] = useState(false);
+
+  // Preference order: manual selection > global prop selection > fallback
+  const fromToken = fromTokenState || initialFromToken || "ETH";
 
   const fromTokenData = tokens.find(
     (t) => t.symbol.toUpperCase() === fromToken,
@@ -31,7 +38,7 @@ export function SwapCard() {
   const estimatedOutput = (parseFloat(amount || "0") * exchangeRate).toFixed(6);
 
   const handleSwapDirection = () => {
-    setFromToken(toToken);
+    setFromTokenState(toToken);
     setToToken(fromToken);
     setAmount("");
   };
@@ -57,7 +64,7 @@ export function SwapCard() {
 
       {/* Slippage Settings */}
       {showSettings && (
-        <div className="px-5 py-3 border-b border-border bg-white/2">
+        <div className="px-5 py-3 border-b border-border bg-white/5">
           <div className="flex items-center justify-between">
             <span className="text-xs text-muted flex items-center gap-1">
               <Info size={12} />

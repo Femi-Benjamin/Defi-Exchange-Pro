@@ -15,16 +15,41 @@ import { TrendingUp } from "lucide-react";
 
 const timeframes: Timeframe[] = ["1H", "24H", "7D", "30D"];
 
-export function ChartArea() {
+import type { CryptoData } from "@/hooks/use-crypto-data";
+
+interface ChartAreaProps {
+  selectedToken?: CryptoData | null;
+}
+
+export function ChartArea({ selectedToken }: ChartAreaProps) {
   const [activeTimeframe, setActiveTimeframe] = useState<Timeframe>("24H");
-  const data = useMemo(
+
+  // Base data from mock
+  const baseData = useMemo(
     () => priceDataByTimeframe[activeTimeframe],
     [activeTimeframe],
   );
 
-  const currentPrice = data[data.length - 1]?.price ?? 0;
+  // Derive data based on selectedToken current_price
+  const data = useMemo(() => {
+    if (!selectedToken) return baseData;
+
+    // Scale the mock ETH data to match the selected token's price range
+    const ethPrice = baseData[baseData.length - 1]?.price || 3000;
+    const scaleFactor = selectedToken.current_price / ethPrice;
+
+    return baseData.map((d) => ({
+      ...d,
+      price: d.price * scaleFactor,
+    }));
+  }, [baseData, selectedToken]);
+
+  const currentPrice =
+    selectedToken?.current_price ?? data[data.length - 1]?.price ?? 0;
   const prevPrice = data[0]?.price ?? 0;
-  const change = ((currentPrice - prevPrice) / prevPrice) * 100;
+  const change =
+    selectedToken?.price_change_percentage_24h ??
+    ((currentPrice - prevPrice) / prevPrice) * 100;
 
   return (
     <div className="flex flex-col h-full glass rounded-2xl overflow-hidden">
@@ -32,13 +57,16 @@ export function ChartArea() {
       <div className="px-5 py-4 border-b border-border flex items-center justify-between">
         <div>
           <div className="flex items-center gap-3">
-            <span className="text-base font-semibold text-white">
-              ETH / USDC
+            <span className="text-base font-semibold text-white uppercase">
+              {selectedToken ? `${selectedToken.symbol} / USDC` : "ETH / USDC"}
             </span>
             <span
               className={`flex items-center gap-1 text-xs font-medium ${change >= 0 ? "text-success" : "text-danger"}`}
             >
-              <TrendingUp size={12} />
+              <TrendingUp
+                size={12}
+                className={change < 0 ? "rotate-180" : ""}
+              />
               {change >= 0 ? "+" : ""}
               {change.toFixed(2)}%
             </span>
@@ -47,7 +75,8 @@ export function ChartArea() {
             $
             {currentPrice.toLocaleString(undefined, {
               minimumFractionDigits: 2,
-              maximumFractionDigits: 2,
+              maximumFractionDigits:
+                selectedToken && selectedToken.current_price < 1 ? 6 : 2,
             })}
           </span>
         </div>
