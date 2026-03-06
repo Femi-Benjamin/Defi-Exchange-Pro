@@ -54,7 +54,7 @@ export function ChartArea({ selectedToken }: ChartAreaProps) {
   return (
     <div className="flex flex-col h-full glass rounded-2xl overflow-hidden">
       {/* Header */}
-      <div className="px-5 py-4 border-b border-border flex items-center justify-between">
+      <div className="px-4 sm:px-5 py-3 sm:py-4 border-b border-border flex flex-wrap items-center justify-between gap-3">
         <div>
           <div className="flex items-center gap-3">
             <span className="text-base font-semibold text-white uppercase">
@@ -71,7 +71,7 @@ export function ChartArea({ selectedToken }: ChartAreaProps) {
               {change.toFixed(2)}%
             </span>
           </div>
-          <span className="text-2xl font-bold text-white mt-1 block">
+          <span className="text-xl sm:text-2xl font-bold text-white mt-1 block">
             $
             {currentPrice.toLocaleString(undefined, {
               minimumFractionDigits: 2,
@@ -100,7 +100,7 @@ export function ChartArea({ selectedToken }: ChartAreaProps) {
       </div>
 
       {/* Chart */}
-      <div className="flex-1 p-4 min-h-[300px]">
+      <div className="flex-1 p-2 sm:p-4 min-h-[250px] sm:min-h-[300px]">
         <ResponsiveContainer width="100%" height="100%">
           <AreaChart
             data={data}

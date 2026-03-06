@@ -8,8 +8,8 @@ export function ProblemSolutionSection() {
   const [ref, inView] = useInView();
 
   return (
-    <section className="relative py-32 overflow-hidden" ref={ref}>
-      <div className="mx-auto max-w-7xl px-6">
+    <section className="relative py-16 sm:py-32 overflow-hidden" ref={ref}>
+      <div className="mx-auto max-w-7xl px-4 sm:px-6">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
           {/* Left: Problem */}
           <motion.div
@@ -21,7 +21,7 @@ export function ProblemSolutionSection() {
               <Layers size={12} />
               The Problem
             </div>
-            <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-white mb-6">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-white mb-4 sm:mb-6">
               Fragmented Liquidity Kills Execution
             </h2>
             <p className="text-muted leading-relaxed mb-8">
@@ -61,7 +61,7 @@ export function ProblemSolutionSection() {
               <Zap size={12} />
               The Solution
             </div>
-            <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-white mb-6">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-white mb-4 sm:mb-6">
               Aggregated Liquidity, Optimized Routing
             </h2>
             <p className="text-muted leading-relaxed mb-8">

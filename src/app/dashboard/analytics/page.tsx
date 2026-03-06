@@ -137,8 +137,8 @@ export default function AnalyticsPage() {
           </div>
 
           {/* Main Chart */}
-          <div className="glass rounded-2xl p-6 border border-border/50">
-            <div className="flex items-center justify-between mb-6">
+          <div className="glass rounded-2xl p-4 sm:p-6 border border-border/50">
+            <div className="flex flex-wrap items-center justify-between mb-4 sm:mb-6 gap-3">
               <h3 className="text-base font-semibold text-white">
                 Global Market Cap (30D)
               </h3>
@@ -154,7 +154,7 @@ export default function AnalyticsPage() {
               </div>
             </div>
 
-            <div className="h-[300px] w-full">
+            <div className="h-[220px] sm:h-[300px] w-full">
               <ResponsiveContainer width="100%" height="100%">
                 <AreaChart data={marketCapData}>
                   <defs>

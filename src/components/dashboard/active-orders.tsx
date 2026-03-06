@@ -46,9 +46,9 @@ export function ActiveOrders() {
   const [activeTab, setActiveTab] = useState("Open Orders");
 
   return (
-    <div className="glass rounded-2xl overflow-hidden flex flex-col h-full min-h-[300px]">
+    <div className="glass rounded-2xl overflow-hidden flex flex-col h-full min-h-[250px] sm:min-h-[300px]">
       {/* Header & Tabs */}
-      <div className="px-5 py-3 border-b border-border flex items-center justify-between">
+      <div className="px-3 sm:px-5 py-3 border-b border-border flex items-center justify-between">
         <div className="flex gap-4">
           {["Open Orders", "Order History", "Market Depth"].map((tab) => (
             <button
@@ -74,16 +74,26 @@ export function ActiveOrders() {
 
       {/* Table Content */}
       <div className="flex-1 overflow-x-auto">
-        <table className="w-full text-sm text-left whitespace-nowrap">
+        <table className="w-full text-xs sm:text-sm text-left whitespace-nowrap">
           <thead className="text-xs text-muted uppercase bg-white/5">
             <tr>
-              <th className="px-5 py-3 font-medium">Pair</th>
-              <th className="px-5 py-3 font-medium">Type</th>
-              <th className="px-5 py-3 font-medium text-right">Price</th>
-              <th className="px-5 py-3 font-medium text-right">Amount</th>
-              <th className="px-5 py-3 font-medium text-right">Total</th>
-              <th className="px-5 py-3 font-medium text-right">Status</th>
-              <th className="px-5 py-3 font-medium text-center">Action</th>
+              <th className="px-3 sm:px-5 py-2.5 sm:py-3 font-medium">Pair</th>
+              <th className="px-3 sm:px-5 py-2.5 sm:py-3 font-medium">Type</th>
+              <th className="px-3 sm:px-5 py-2.5 sm:py-3 font-medium text-right">
+                Price
+              </th>
+              <th className="px-3 sm:px-5 py-2.5 sm:py-3 font-medium text-right">
+                Amount
+              </th>
+              <th className="px-3 sm:px-5 py-2.5 sm:py-3 font-medium text-right hidden sm:table-cell">
+                Total
+              </th>
+              <th className="px-3 sm:px-5 py-2.5 sm:py-3 font-medium text-right">
+                Status
+              </th>
+              <th className="px-3 sm:px-5 py-2.5 sm:py-3 font-medium text-center hidden sm:table-cell">
+                Action
+              </th>
             </tr>
           </thead>
           <tbody className="divide-y divide-border/50">
@@ -92,29 +102,29 @@ export function ActiveOrders() {
                 key={order.id}
                 className="hover:bg-white/2 transition-colors group"
               >
-                <td className="px-5 py-3.5 font-semibold text-white">
+                <td className="px-3 sm:px-5 py-3 sm:py-3.5 font-semibold text-white">
                   {order.pair}
                 </td>
-                <td className="px-5 py-3.5">
+                <td className="px-3 sm:px-5 py-3 sm:py-3.5">
                   <span
                     className={`px-2 py-0.5 rounded text-xs font-medium ${order.type === "Buy" ? "bg-success/10 text-success" : "bg-danger/10 text-danger"}`}
                   >
                     {order.type}
                   </span>
                 </td>
-                <td className="px-5 py-3.5 text-right font-medium text-white">
+                <td className="px-3 sm:px-5 py-3 sm:py-3.5 text-right font-medium text-white">
                   {order.price}
                 </td>
-                <td className="px-5 py-3.5 text-right text-muted">
+                <td className="px-3 sm:px-5 py-3 sm:py-3.5 text-right text-muted">
                   {order.amount}
                 </td>
-                <td className="px-5 py-3.5 text-right text-white">
+                <td className="px-3 sm:px-5 py-3 sm:py-3.5 text-right text-white hidden sm:table-cell">
                   {order.total}
                 </td>
-                <td className="px-5 py-3.5 text-right">
+                <td className="px-3 sm:px-5 py-3 sm:py-3.5 text-right">
                   <span className="text-muted">{order.status}</span>
                 </td>
-                <td className="px-5 py-3.5 text-center">
+                <td className="px-3 sm:px-5 py-3 sm:py-3.5 text-center hidden sm:table-cell">
                   <button className="text-muted hover:text-danger hover:underline text-xs transition-colors opacity-0 group-hover:opacity-100">
                     Cancel
                   </button>

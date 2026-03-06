@@ -76,13 +76,13 @@ export default function PortfolioPage() {
             {/* Overview Cards */}
             <div className="lg:col-span-8 flex flex-col gap-6">
               {/* Total Balance Card */}
-              <div className="glass rounded-2xl p-6 relative overflow-hidden">
+              <div className="glass rounded-2xl p-4 sm:p-6 relative overflow-hidden">
                 <div className="absolute top-0 right-0 w-64 h-64 bg-primary/10 rounded-full filter blur-[80px] -translate-y-1/2 translate-x-1/2" />
 
                 <h2 className="text-sm font-medium text-muted mb-2">
                   Total Balance
                 </h2>
-                <div className="text-4xl md:text-5xl font-bold text-white mb-4 tracking-tight">
+                <div className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4 tracking-tight">
                   $
                   {isLoading
                     ? "0.00"
@@ -102,8 +102,8 @@ export default function PortfolioPage() {
               </div>
 
               {/* Asset Performance */}
-              <div className="glass rounded-2xl p-6 flex-1">
-                <div className="flex items-center justify-between mb-6">
+              <div className="glass rounded-2xl p-4 sm:p-6 flex-1">
+                <div className="flex flex-wrap items-center justify-between mb-4 sm:mb-6 gap-3">
                   <h3 className="text-base font-semibold text-white">
                     Your Assets
                   </h3>

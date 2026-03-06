@@ -99,8 +99,8 @@ export function HeroSection() {
       {/* Animated gradient BG */}
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-background to-secondary/5 animate-gradient" />
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-[120px]" />
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-secondary/10 rounded-full blur-[120px]" />
+        <div className="absolute top-1/4 left-1/4 w-48 h-48 sm:w-96 sm:h-96 bg-primary/10 rounded-full blur-[120px]" />
+        <div className="absolute bottom-1/4 right-1/4 w-48 h-48 sm:w-96 sm:h-96 bg-secondary/10 rounded-full blur-[120px]" />
         <ParticleBackground />
       </div>
 
@@ -108,7 +108,7 @@ export function HeroSection() {
       <div className="absolute inset-0 noise-overlay pointer-events-none" />
 
       {/* Content */}
-      <div className="relative z-10 max-w-5xl mx-auto px-6 text-center">
+      <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 text-center">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -121,14 +121,14 @@ export function HeroSection() {
           </div>
 
           {/* Headline */}
-          <h1 className="text-5xl md:text-7xl font-bold tracking-tight leading-[1.1] text-white mb-6">
+          <h1 className="text-3xl sm:text-5xl md:text-7xl font-bold tracking-tight leading-[1.1] text-white mb-4 sm:mb-6">
             Institutional-Grade{" "}
             <span className="gradient-text">Decentralized</span> Trading
             Infrastructure
           </h1>
 
           {/* Subheadline */}
-          <p className="text-lg md:text-xl text-muted max-w-2xl mx-auto leading-relaxed mb-10">
+          <p className="text-base sm:text-lg md:text-xl text-muted max-w-2xl mx-auto leading-relaxed mb-8 sm:mb-10">
             Aggregate liquidity. Optimize execution. Trade at scale.
           </p>
 
@@ -136,7 +136,7 @@ export function HeroSection() {
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
               href="/dashboard"
-              className="group inline-flex items-center gap-2.5 px-10 py-3.5 rounded-xl bg-primary text-[#0B0F19] font-semibold text-sm hover:bg-primary/90 transition-all duration-300 glow-primary hover:glow-primary-intense hover:-translate-y-0.5"
+              className="group inline-flex items-center gap-2.5 px-8 sm:px-10 py-3 sm:py-3.5 rounded-xl bg-primary text-[#0B0F19] font-semibold text-sm hover:bg-primary/90 transition-all duration-300 glow-primary hover:glow-primary-intense hover:-translate-y-0.5"
             >
               Launch App
               <ArrowRight

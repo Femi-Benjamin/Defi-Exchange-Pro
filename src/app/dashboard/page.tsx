@@ -71,7 +71,7 @@ export default function DashboardPage() {
 
             {/* Center Column: Chart & Action */}
             <div className="lg:col-span-6 lg:col-start-4 flex flex-col gap-6 min-h-[400px]">
-              <div className="glass rounded-2xl p-1 shrink-0 h-[400px] lg:h-[500px]">
+              <div className="glass rounded-2xl p-1 shrink-0 h-[300px] sm:h-[400px] lg:h-[500px]">
                 <ChartArea selectedToken={selectedToken} />
               </div>
 

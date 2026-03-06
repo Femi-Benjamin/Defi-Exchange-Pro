@@ -37,14 +37,14 @@ export default function SettingsPage() {
             </p>
           </div>
 
-          <div className="flex flex-col md:flex-row gap-8">
+          <div className="flex flex-col md:flex-row gap-6 md:gap-8">
             {/* Sidebar */}
-            <div className="w-full md:w-64 shrink-0 space-y-1">
+            <div className="w-full md:w-64 shrink-0 flex md:flex-col gap-1 overflow-x-auto md:overflow-x-visible pb-2 md:pb-0">
               {tabs.map((tab) => (
                 <button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
-                  className={`w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl transition-all ${
+                  className={`flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl transition-all whitespace-nowrap shrink-0 md:w-full ${
                     activeTab === tab.id
                       ? "bg-primary/10 text-primary glow-primary border border-primary/20"
                       : "text-muted hover:text-white hover:bg-white/5 border border-transparent"
@@ -55,7 +55,7 @@ export default function SettingsPage() {
                 </button>
               ))}
 
-              <div className="pt-6 mt-6 border-t border-border/50 space-y-1">
+              <div className="hidden md:block pt-6 mt-6 border-t border-border/50 space-y-1">
                 <button className="w-full flex items-center gap-3 px-4 py-3 text-sm font-medium text-muted hover:text-white hover:bg-white/5 rounded-xl transition-all">
                   <HelpCircle size={18} />
                   Support
@@ -160,7 +160,7 @@ export default function SettingsPage() {
                   </div>
 
                   {/* 2FA */}
-                  <div className="p-5 rounded-xl bg-white/5 border border-border flex items-center justify-between">
+                  <div className="p-4 sm:p-5 rounded-xl bg-white/5 border border-border flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                     <div>
                       <h3 className="text-base font-medium text-white mb-1">
                         Two-Factor Authentication (2FA)

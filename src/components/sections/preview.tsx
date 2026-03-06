@@ -9,8 +9,8 @@ export function PreviewSection() {
   const [ref, inView] = useInView();
 
   return (
-    <section id="preview" className="relative py-32 overflow-hidden" ref={ref}>
-      <div className="mx-auto max-w-7xl px-6">
+    <section id="preview" className="relative py-16 sm:py-32 overflow-hidden" ref={ref}>
+      <div className="mx-auto max-w-7xl px-4 sm:px-6">
         {/* Header */}
         <motion.div
           className="text-center mb-12"
@@ -50,9 +50,9 @@ export function PreviewSection() {
             </div>
 
             {/* Dashboard mockup */}
-            <div className="p-6 grid grid-cols-12 gap-4 min-h-[400px]">
+            <div className="p-3 sm:p-6 grid grid-cols-1 sm:grid-cols-12 gap-4 min-h-[250px] sm:min-h-[400px]">
               {/* Left: Markets */}
-              <div className="col-span-3 space-y-3">
+              <div className="hidden sm:block col-span-3 space-y-3">
                 <div className="text-xs font-medium text-muted mb-2 uppercase tracking-wider">
                   Markets
                 </div>
@@ -78,7 +78,7 @@ export function PreviewSection() {
               </div>
 
               {/* Center: Chart */}
-              <div className="col-span-6">
+              <div className="col-span-1 sm:col-span-6">
                 <div className="h-full rounded-xl bg-white/2 border border-border p-4">
                   <div className="flex items-center justify-between mb-4">
                     <div>
@@ -131,7 +131,7 @@ export function PreviewSection() {
               </div>
 
               {/* Right: Order */}
-              <div className="col-span-3 space-y-3">
+              <div className="hidden sm:block col-span-3 space-y-3">
                 <div className="text-xs font-medium text-muted mb-2 uppercase tracking-wider">
                   Swap
                 </div>

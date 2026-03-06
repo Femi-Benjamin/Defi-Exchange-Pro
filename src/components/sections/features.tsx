@@ -18,8 +18,8 @@ export function FeaturesSection() {
   const [ref, inView] = useInView();
 
   return (
-    <section id="features" className="relative py-32" ref={ref}>
-      <div className="mx-auto max-w-7xl px-6">
+    <section id="features" className="relative py-16 sm:py-32" ref={ref}>
+      <div className="mx-auto max-w-7xl px-4 sm:px-6">
         {/* Header */}
         <motion.div
           className="text-center mb-16"
@@ -30,7 +30,7 @@ export function FeaturesSection() {
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full glass text-xs font-medium text-primary mb-4">
             Platform Capabilities
           </div>
-          <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-white mb-4">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-white mb-4">
             Built for Professional Traders
           </h2>
           <p className="text-muted max-w-xl mx-auto leading-relaxed">

@@ -43,13 +43,13 @@ export function MetricsSection() {
   const [ref, inView] = useInView();
 
   return (
-    <section id="metrics" className="relative py-32" ref={ref}>
+    <section id="metrics" className="relative py-16 sm:py-32" ref={ref}>
       {/* Background accents */}
       <div className="absolute inset-0">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-primary/5 rounded-full blur-[100px]" />
       </div>
 
-      <div className="relative mx-auto max-w-7xl px-6">
+      <div className="relative mx-auto max-w-7xl px-4 sm:px-6">
         <motion.div
           className="text-center mb-16"
           initial={{ opacity: 0, y: 20 }}
@@ -59,7 +59,7 @@ export function MetricsSection() {
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full glass text-xs font-medium text-primary mb-4">
             By the Numbers
           </div>
-          <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-white mb-4">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-white mb-4">
             Built for Scale
           </h2>
           <p className="text-muted max-w-xl mx-auto leading-relaxed">

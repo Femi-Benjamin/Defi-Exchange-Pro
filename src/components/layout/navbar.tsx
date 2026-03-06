@@ -15,7 +15,7 @@ export function Navbar() {
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 glass-strong">
-      <div className="mx-auto max-w-7xl px-6 py-4 flex items-center justify-between">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 py-3 sm:py-4 flex items-center justify-between">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-3 group">
           <div className="relative w-10 h-10 overflow-hidden rounded-lg group-hover:glow-primary transition-all duration-300">
@@ -25,7 +25,7 @@ export function Navbar() {
               className="w-full h-full object-cover"
             />
           </div>
-          <span className="font-semibold text-lg tracking-tight text-white">
+          <span className="font-semibold text-base sm:text-lg tracking-tight text-white">
             DeFi Exchange <span className="text-primary">Pro</span>
           </span>
         </Link>
