@@ -10,7 +10,7 @@ export function ProblemSolutionSection() {
   return (
     <section className="relative py-32 overflow-hidden" ref={ref}>
       <div className="mx-auto max-w-7xl px-6">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
           {/* Left: Problem */}
           <motion.div
             initial={{ opacity: 0, x: -40 }}

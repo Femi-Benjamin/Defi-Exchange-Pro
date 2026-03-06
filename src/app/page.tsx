@@ -30,9 +30,9 @@ export default function HomePage() {
   }, [handleOpenCaseStudy]);
 
   return (
-    <>
+    <div className="bg-[#0B0F19] min-h-screen overflow-x-hidden relative w-full flex flex-col">
       <Navbar />
-      <main>
+      <main className="flex-1 w-full overflow-x-hidden">
         <HeroSection />
         <ProblemSolutionSection />
         <FeaturesSection />
@@ -44,6 +44,6 @@ export default function HomePage() {
         isOpen={caseStudyOpen}
         onClose={() => setCaseStudyOpen(false)}
       />
-    </>
+    </div>
   );
 }

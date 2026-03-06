@@ -136,7 +136,7 @@ export function HeroSection() {
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
               href="/dashboard"
-              className="group inline-flex items-center gap-2.5 px-7 py-3.5 rounded-xl bg-primary text-[#0B0F19] font-semibold text-sm hover:bg-primary/90 transition-all duration-300 glow-primary hover:glow-primary-intense hover:-translate-y-0.5"
+              className="group inline-flex items-center gap-2.5 px-10 py-3.5 rounded-xl bg-primary text-[#0B0F19] font-semibold text-sm hover:bg-primary/90 transition-all duration-300 glow-primary hover:glow-primary-intense hover:-translate-y-0.5"
             >
               Launch App
               <ArrowRight
@@ -156,7 +156,7 @@ export function HeroSection() {
 
         {/* Scroll indicator */}
         <motion.div
-          className="absolute bottom-8 left-1/2 -translate-x-1/2"
+          className="mt-16 sm:mt-24 flex justify-center w-full"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.2, duration: 0.6 }}

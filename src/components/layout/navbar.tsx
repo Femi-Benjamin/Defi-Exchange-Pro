@@ -2,12 +2,12 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { Menu, X } from "lucide-react";
+import { Menu, X, LayoutDashboard, MonitorPlay, BarChart2 } from "lucide-react";
 
 const navLinks = [
-  { label: "Features", href: "#features" },
-  { label: "Preview", href: "#preview" },
-  { label: "Metrics", href: "#metrics" },
+  { label: "Features", href: "#features", icon: LayoutDashboard },
+  { label: "Preview", href: "#preview", icon: MonitorPlay },
+  { label: "Metrics", href: "#metrics", icon: BarChart2 },
 ];
 
 export function Navbar() {
@@ -32,15 +32,19 @@ export function Navbar() {
 
         {/* Desktop Nav */}
         <nav className="hidden md:flex items-center gap-8">
-          {navLinks.map((link) => (
-            <a
-              key={link.label}
-              href={link.href}
-              className="text-sm text-muted hover:text-white transition-colors duration-200"
-            >
-              {link.label}
-            </a>
-          ))}
+          {navLinks.map((link) => {
+            const Icon = link.icon;
+            return (
+              <a
+                key={link.label}
+                href={link.href}
+                className="flex items-center gap-2 text-sm text-muted hover:text-primary transition-colors duration-200"
+              >
+                <Icon size={16} />
+                {link.label}
+              </a>
+            );
+          })}
         </nav>
 
         {/* CTA */}
@@ -65,16 +69,20 @@ export function Navbar() {
       {/* Mobile Menu */}
       {mobileOpen && (
         <div className="md:hidden glass-strong border-t border-border px-6 py-4 space-y-4">
-          {navLinks.map((link) => (
-            <a
-              key={link.label}
-              href={link.href}
-              className="block text-sm text-muted hover:text-white transition-colors"
-              onClick={() => setMobileOpen(false)}
-            >
-              {link.label}
-            </a>
-          ))}
+          {navLinks.map((link) => {
+            const Icon = link.icon;
+            return (
+              <a
+                key={link.label}
+                href={link.href}
+                className="flex items-center gap-3 text-sm text-muted hover:text-primary transition-colors py-2"
+                onClick={() => setMobileOpen(false)}
+              >
+                <Icon size={18} />
+                {link.label}
+              </a>
+            );
+          })}
           <Link
             href="/dashboard"
             className="block text-center px-5 py-2.5 text-sm font-medium rounded-lg bg-primary text-[#0B0F19]"

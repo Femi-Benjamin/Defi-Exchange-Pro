@@ -5,6 +5,7 @@ import { useState, useMemo } from "react";
 import { DashboardNav } from "@/components/dashboard/dashboard-nav";
 import { MarketsPanel } from "@/components/dashboard/markets-panel";
 import { SwapCard } from "@/components/dashboard/swap-card";
+import { ActiveOrders } from "@/components/dashboard/active-orders";
 import { useCryptoData, CryptoData } from "@/hooks/use-crypto-data";
 
 // Lazy load heavy chart component
@@ -70,14 +71,22 @@ export default function DashboardPage() {
 
             {/* Center Column: Chart & Action */}
             <div className="lg:col-span-6 lg:col-start-4 flex flex-col gap-6 min-h-[400px]">
-              <div className="bg-[#080B12]/40 rounded-2xl p-1 shrink-0 h-[400px] lg:h-[500px]">
+              <div className="glass rounded-2xl p-1 shrink-0 h-[400px] lg:h-[500px]">
                 <ChartArea selectedToken={selectedToken} />
+              </div>
+
+              <div className="flex-1 w-full hidden lg:block">
+                <ActiveOrders />
               </div>
 
               <div className="w-full max-w-md mx-auto xl:hidden pb-10">
                 <SwapCard
                   initialFromToken={selectedToken?.symbol.toUpperCase()}
                 />
+              </div>
+
+              <div className="w-full lg:hidden pb-10">
+                <ActiveOrders />
               </div>
             </div>
 

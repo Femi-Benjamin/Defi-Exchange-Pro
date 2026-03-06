@@ -1,7 +1,11 @@
 "use client";
 
+import { useState } from "react";
+import Link from "next/link";
 import { transactions } from "@/lib/mock-data";
 import { CheckCircle2, Clock, XCircle, ArrowUpRight } from "lucide-react";
+import { TransactionModal } from "./transaction-modal";
+import type { Transaction } from "@/types";
 
 const statusConfig = {
   success: {
@@ -25,6 +29,8 @@ const statusConfig = {
 };
 
 export function TransactionHistory() {
+  const [selectedTx, setSelectedTx] = useState<Transaction | null>(null);
+
   return (
     <div className="flex flex-col h-full glass rounded-2xl overflow-hidden">
       {/* Header */}
@@ -32,9 +38,12 @@ export function TransactionHistory() {
         <h3 className="text-xs font-semibold uppercase tracking-wider text-muted">
           Recent Transactions
         </h3>
-        <button className="text-xs text-primary hover:text-primary/80 transition-colors">
+        <Link
+          href="/dashboard/portfolio"
+          className="text-xs text-primary hover:text-primary/80 transition-colors"
+        >
           View All
-        </button>
+        </Link>
       </div>
 
       {/* List */}
@@ -44,9 +53,10 @@ export function TransactionHistory() {
           const StatusIcon = config.icon;
 
           return (
-            <div
+            <button
               key={tx.id}
-              className="px-4 py-3 border-b border-border/50 hover:bg-white/[0.02] transition-colors"
+              onClick={() => setSelectedTx(tx)}
+              className="w-full text-left px-4 py-3 border-b border-border/50 hover:bg-white/4 transition-colors cursor-pointer"
             >
               <div className="flex items-start gap-3">
                 {/* Status Icon */}
@@ -81,10 +91,16 @@ export function TransactionHistory() {
                   </div>
                 </div>
               </div>
-            </div>
+            </button>
           );
         })}
       </div>
+
+      <TransactionModal
+        transaction={selectedTx}
+        isOpen={!!selectedTx}
+        onClose={() => setSelectedTx(null)}
+      />
     </div>
   );
 }

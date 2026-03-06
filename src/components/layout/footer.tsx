@@ -1,4 +1,4 @@
-import { Github, Twitter } from "lucide-react";
+import { Github, Twitter, Linkedin } from "lucide-react";
 
 const productLinks = [
   { label: "Features", href: "#features" },
@@ -18,12 +18,16 @@ export function Footer() {
   return (
     <footer className="border-t border-border bg-surface/50">
       <div className="mx-auto max-w-7xl px-6 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 lg:gap-12">
           {/* Brand */}
           <div className="md:col-span-2">
             <div className="flex items-center gap-3 mb-4">
-              <div className="w-9 h-9 rounded-lg gradient-primary flex items-center justify-center font-bold text-sm text-[#0B0F19]">
-                DX
+              <div className="relative w-10 h-10 overflow-hidden rounded-lg">
+                <img
+                  src="/logo.png"
+                  alt="DeFi Exchange Pro"
+                  className="w-full h-full object-cover"
+                />
               </div>
               <span className="font-semibold text-lg tracking-tight text-white">
                 DeFi Exchange <span className="text-primary">Pro</span>
@@ -45,6 +49,12 @@ export function Footer() {
                 className="w-9 h-9 rounded-lg bg-white/5 hover:bg-white/10 flex items-center justify-center text-muted hover:text-white transition-all duration-200"
               >
                 <Github size={16} />
+              </a>
+              <a
+                href="#"
+                className="w-9 h-9 rounded-lg bg-white/5 hover:bg-white/10 flex items-center justify-center text-muted hover:text-white transition-all duration-200"
+              >
+                <Linkedin size={16} />
               </a>
             </div>
           </div>

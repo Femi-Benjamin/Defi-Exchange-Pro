@@ -7,8 +7,10 @@ import {
   Settings2,
   Info,
   Loader2,
+  CheckCircle2,
+  Search,
 } from "lucide-react";
-import { useCryptoData } from "@/hooks/use-crypto-data";
+import { useCryptoData, CryptoData } from "@/hooks/use-crypto-data";
 
 interface SwapCardProps {
   initialFromToken?: string;
@@ -21,6 +23,15 @@ export function SwapCard({ initialFromToken }: SwapCardProps) {
   const [amount, setAmount] = useState("1.0");
   const [slippage, setSlippage] = useState("0.5");
   const [showSettings, setShowSettings] = useState(false);
+
+  // Dropdown states
+  const [showFromDropdown, setShowFromDropdown] = useState(false);
+  const [showToDropdown, setShowToDropdown] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+
+  // Swap Simulation States
+  const [isSwapping, setIsSwapping] = useState(false);
+  const [swapSuccess, setSwapSuccess] = useState(false);
 
   // Preference order: manual selection > global prop selection > fallback
   const fromToken = fromTokenState || initialFromToken || "ETH";
@@ -42,6 +53,91 @@ export function SwapCard({ initialFromToken }: SwapCardProps) {
     setToToken(fromToken);
     setAmount("");
   };
+
+  const handleSwapSubmit = () => {
+    if (!amount || parseFloat(amount) <= 0) return;
+    setIsSwapping(true);
+    // Simulate transaction delay
+    setTimeout(() => {
+      setIsSwapping(false);
+      setSwapSuccess(true);
+      // Auto-hide success after 3 seconds
+      setTimeout(() => setSwapSuccess(false), 3000);
+    }, 2000);
+  };
+
+  const filteredTokens = tokens.filter(
+    (t) =>
+      t.symbol.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      t.name.toLowerCase().includes(searchQuery.toLowerCase()),
+  );
+
+  const TokenSelectDropdown = ({
+    onSelect,
+    onClose,
+  }: {
+    onSelect: (symbol: string) => void;
+    onClose: () => void;
+  }) => (
+    <div className="absolute top-12 right-0 w-64 glass-strong rounded-xl border border-border shadow-2xl overflow-hidden z-50 flex flex-col max-h-[300px] animate-in slide-in-from-top-2">
+      <div className="p-3 border-b border-border">
+        <div className="relative">
+          <Search
+            size={14}
+            className="absolute left-3 top-1/2 -translate-y-1/2 text-muted"
+          />
+          <input
+            type="text"
+            placeholder="Search tokens..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="w-full pl-9 pr-3 py-2 bg-black/40 border border-border rounded-lg text-sm text-white focus:outline-none focus:border-primary/50"
+          />
+        </div>
+      </div>
+      <div className="overflow-y-auto flex-1 p-2 space-y-1">
+        {filteredTokens.map((t) => (
+          <button
+            key={t.id}
+            onClick={() => {
+              onSelect(t.symbol.toUpperCase());
+              setSearchQuery("");
+              onClose();
+            }}
+            className="w-full flex items-center justify-between p-2 rounded-lg hover:bg-white/5 transition-colors text-left"
+          >
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 rounded-full bg-white/5 overflow-hidden shrink-0">
+                {t.image ? (
+                  <img
+                    src={t.image}
+                    alt={t.symbol}
+                    className="w-full h-full object-cover"
+                  />
+                ) : (
+                  <span className="flex items-center justify-center h-full text-xs">
+                    {t.symbol.charAt(0)}
+                  </span>
+                )}
+              </div>
+              <div className="flex flex-col">
+                <span className="text-sm font-semibold text-white uppercase">
+                  {t.symbol}
+                </span>
+                <span className="text-xs text-muted">{t.name}</span>
+              </div>
+            </div>
+            <span className="text-sm font-medium text-white">
+              $
+              {t.current_price.toLocaleString(undefined, {
+                maximumFractionDigits: 4,
+              })}
+            </span>
+          </button>
+        ))}
+      </div>
+    </div>
+  );
 
   return (
     <div className="glass rounded-2xl overflow-hidden relative">
@@ -111,31 +207,47 @@ export function SwapCard({ initialFromToken }: SwapCardProps) {
               placeholder="0.0"
               className="flex-1 min-w-0 bg-transparent text-xl font-semibold text-white focus:outline-none placeholder-muted/40"
             />
-            <button className="flex items-center gap-2 px-3 py-2 rounded-lg bg-white/5 hover:bg-white/10 transition-colors shrink-0 max-w-[140px]">
-              <div className="w-6 h-6 rounded-full bg-white/10 flex items-center justify-center shrink-0 overflow-hidden">
-                {fromTokenData?.image ? (
-                  <img
-                    src={fromTokenData.image}
-                    alt={fromToken}
-                    className="w-full h-full object-cover"
-                  />
-                ) : (
-                  <span className="text-xs">{fromToken.charAt(0)}</span>
-                )}
-              </div>
-              <span className="text-sm font-medium text-white truncate">
-                {fromToken}
-              </span>
-              <ChevronDown size={14} className="text-muted shrink-0" />
-            </button>
+            <div className="relative">
+              <button
+                onClick={() => {
+                  setShowToDropdown(false);
+                  setShowFromDropdown(!showFromDropdown);
+                  setSearchQuery("");
+                }}
+                className="flex items-center gap-2 px-3 py-2 rounded-lg bg-white/5 hover:bg-white/10 transition-colors shrink-0 max-w-[140px]"
+              >
+                <div className="w-6 h-6 rounded-full bg-white/10 flex items-center justify-center shrink-0 overflow-hidden">
+                  {fromTokenData?.image ? (
+                    <img
+                      src={fromTokenData.image}
+                      alt={fromToken}
+                      className="w-full h-full object-cover"
+                    />
+                  ) : (
+                    <span className="text-xs">{fromToken.charAt(0)}</span>
+                  )}
+                </div>
+                <span className="text-sm font-medium text-white truncate">
+                  {fromToken}
+                </span>
+                <ChevronDown size={14} className="text-muted shrink-0" />
+              </button>
+
+              {showFromDropdown && (
+                <TokenSelectDropdown
+                  onSelect={setFromTokenState}
+                  onClose={() => setShowFromDropdown(false)}
+                />
+              )}
+            </div>
           </div>
         </div>
 
         {/* Swap Direction */}
-        <div className="flex justify-center -my-1 relative z-10">
+        <div className="flex justify-center relative z-10 group">
           <button
             onClick={handleSwapDirection}
-            className="w-10 h-10 rounded-xl bg-[#111827] border border-border flex items-center justify-center text-muted hover:text-primary hover:border-primary/30 transition-all duration-200 hover:rotate-180 shadow-lg"
+            className="w-10 h-10 rounded-xl bg-[#111827] border-[3px] border-[#080B12] flex items-center justify-center text-muted hover:text-primary hover:border-[#080B12] transition-all duration-200 hover:rotate-180 shadow-lg glow-secondary/10"
           >
             <ArrowDownUp size={16} />
           </button>
@@ -151,23 +263,39 @@ export function SwapCard({ initialFromToken }: SwapCardProps) {
             <div className="flex-1 text-xl font-semibold text-white truncate pr-2">
               {estimatedOutput === "NaN" ? "0.00" : estimatedOutput}
             </div>
-            <button className="flex items-center gap-2 px-3 py-2 rounded-lg bg-white/5 hover:bg-white/10 transition-colors shrink-0 max-w-[140px]">
-              <div className="w-6 h-6 rounded-full bg-white/10 flex items-center justify-center shrink-0 overflow-hidden">
-                {toTokenData?.image ? (
-                  <img
-                    src={toTokenData.image}
-                    alt={toToken}
-                    className="w-full h-full object-cover"
-                  />
-                ) : (
-                  <span className="text-xs">{toToken.charAt(0)}</span>
-                )}
-              </div>
-              <span className="text-sm font-medium text-white truncate">
-                {toToken}
-              </span>
-              <ChevronDown size={14} className="text-muted shrink-0" />
-            </button>
+            <div className="relative">
+              <button
+                onClick={() => {
+                  setShowFromDropdown(false);
+                  setShowToDropdown(!showToDropdown);
+                  setSearchQuery("");
+                }}
+                className="flex items-center gap-2 px-3 py-2 rounded-lg bg-white/5 hover:bg-white/10 transition-colors shrink-0 max-w-[140px]"
+              >
+                <div className="w-6 h-6 rounded-full bg-white/10 flex items-center justify-center shrink-0 overflow-hidden">
+                  {toTokenData?.image ? (
+                    <img
+                      src={toTokenData.image}
+                      alt={toToken}
+                      className="w-full h-full object-cover"
+                    />
+                  ) : (
+                    <span className="text-xs">{toToken.charAt(0)}</span>
+                  )}
+                </div>
+                <span className="text-sm font-medium text-white truncate">
+                  {toToken}
+                </span>
+                <ChevronDown size={14} className="text-muted shrink-0" />
+              </button>
+
+              {showToDropdown && (
+                <TokenSelectDropdown
+                  onSelect={setToToken}
+                  onClose={() => setShowToDropdown(false)}
+                />
+              )}
+            </div>
           </div>
         </div>
 
@@ -198,10 +326,40 @@ export function SwapCard({ initialFromToken }: SwapCardProps) {
         </div>
 
         {/* CTA */}
-        <button className="w-full py-3.5 rounded-xl bg-primary text-[#0B0F19] font-semibold text-sm hover:bg-primary/90 transition-all duration-200 glow-primary hover:glow-primary-intense mt-2">
-          Swap Tokens
-        </button>
+        {/* CTA */}
+        {swapSuccess ? (
+          <div className="w-full py-3 rounded-xl bg-success/10 border border-success/30 text-success font-semibold text-sm flex items-center justify-center gap-2 mt-2 animate-in fade-in slide-in-from-bottom-2">
+            <CheckCircle2 size={18} />
+            Swap Successful!
+          </div>
+        ) : (
+          <button
+            onClick={handleSwapSubmit}
+            disabled={isSwapping || !amount || parseFloat(amount) <= 0}
+            className="w-full py-3.5 rounded-xl bg-primary text-[#0B0F19] font-semibold text-sm hover:bg-primary/90 transition-all duration-200 glow-primary hover:glow-primary-intense mt-2 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:glow-primary"
+          >
+            {isSwapping ? (
+              <>
+                <Loader2 size={18} className="animate-spin" />
+                Swapping...
+              </>
+            ) : (
+              "Swap Tokens"
+            )}
+          </button>
+        )}
       </div>
+
+      {/* Click outside overlay to close dropdowns */}
+      {(showFromDropdown || showToDropdown) && (
+        <div
+          className="fixed inset-0 z-40"
+          onClick={() => {
+            setShowFromDropdown(false);
+            setShowToDropdown(false);
+          }}
+        />
+      )}
     </div>
   );
 }
