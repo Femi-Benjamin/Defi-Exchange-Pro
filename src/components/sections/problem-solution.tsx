@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { useInView } from "@/hooks/use-in-view";
-import { ArrowRight, Layers, Zap } from "lucide-react";
+import { Layers, Zap } from "lucide-react";
 
 export function ProblemSolutionSection() {
   const [ref, inView] = useInView();
@@ -86,30 +86,126 @@ export function ProblemSolutionSection() {
               ))}
             </div>
 
-            {/* Visual diagram */}
-            <div className="mt-10 p-6 rounded-2xl glass relative overflow-hidden">
-              <div className="flex items-center justify-between">
-                <div className="text-center">
-                  <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-2">
-                    <span className="text-primary text-lg">⟠</span>
-                  </div>
-                  <span className="text-xs text-muted">DEX Pool A</span>
+            {/* Animated Flow Diagram */}
+            <div className="mt-10 p-6 md:p-8 rounded-2xl glass-strong border border-border/50 shadow-elevated relative overflow-hidden group">
+              {/* Background ambient glow */}
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-primary/5 blur-[50px] opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+
+              <div className="relative z-10">
+                {/* Top Row: Liquidity Sources */}
+                <div className="flex justify-between items-end mb-6">
+                  {["Uniswap", "Curve", "Balancer"].map((dex, i) => (
+                    <motion.div
+                      key={dex}
+                      className="flex flex-col items-center"
+                      initial={{ y: 0 }}
+                      animate={{ y: [0, -4, 0] }}
+                      transition={{
+                        duration: 3,
+                        delay: i * 0.4,
+                        repeat: Infinity,
+                        ease: "easeInOut",
+                      }}
+                    >
+                      <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center mb-2 shadow-sm">
+                        <span className="text-primary text-sm font-bold">
+                          {["🦄", "🌈", "⚖️"][i]}
+                        </span>
+                      </div>
+                      <span className="text-[10px] sm:text-xs text-muted uppercase font-medium tracking-wider">
+                        {dex}
+                      </span>
+                    </motion.div>
+                  ))}
                 </div>
-                <ArrowRight size={16} className="text-primary/40" />
-                <div className="text-center">
-                  <div className="w-14 h-14 rounded-xl gradient-primary flex items-center justify-center mx-auto mb-2 glow-primary">
-                    <span className="text-[#0B0F19] text-sm font-bold">DX</span>
+
+                {/* Middle: Smart Router */}
+                <div className="relative flex justify-center py-6">
+                  {/* Connection Lines */}
+                  <div className="absolute top-0 left-[15%] w-[35%] h-1/2 border-l-2 border-t-2 border-primary/20 rounded-tl-xl border-dashed" />
+                  <div className="absolute top-0 right-[15%] w-[35%] h-1/2 border-r-2 border-t-2 border-primary/20 rounded-tr-xl border-dashed" />
+                  <div className="absolute top-0 left-1/2 w-0.5 h-1/2 bg-primary/20 border-dashed" />
+
+                  {/* Moving dots on lines */}
+                  <motion.div
+                    className="absolute w-1.5 h-1.5 bg-primary rounded-full blur-[1px] shadow-[0_0_8px_#00F0FF]"
+                    animate={{
+                      top: ["0%", "50%"],
+                      left: ["15%", "50%"],
+                      opacity: [0, 1, 0],
+                    }}
+                    transition={{
+                      duration: 2,
+                      repeat: Infinity,
+                      ease: "linear",
+                    }}
+                  />
+                  <motion.div
+                    className="absolute w-1.5 h-1.5 bg-primary rounded-full blur-[1px] shadow-[0_0_8px_#00F0FF]"
+                    animate={{
+                      top: ["0%", "50%"],
+                      left: ["50%", "50%"],
+                      opacity: [0, 1, 0],
+                    }}
+                    transition={{
+                      duration: 2,
+                      delay: 0.6,
+                      repeat: Infinity,
+                      ease: "linear",
+                    }}
+                  />
+                  <motion.div
+                    className="absolute w-1.5 h-1.5 bg-primary rounded-full blur-[1px] shadow-[0_0_8px_#00F0FF]"
+                    animate={{
+                      top: ["0%", "50%"],
+                      left: ["85%", "50%"],
+                      opacity: [0, 1, 0],
+                    }}
+                    transition={{
+                      duration: 2,
+                      delay: 1.2,
+                      repeat: Infinity,
+                      ease: "linear",
+                    }}
+                  />
+
+                  {/* Router Node */}
+                  <div className="relative z-10 w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-linear-to-br from-primary to-secondary p-px shadow-glow-primary group-hover:shadow-glow-primary-intense transition-shadow duration-500">
+                    <div className="w-full h-full bg-[#0E131F] rounded-[15px] flex items-center justify-center flex-col">
+                      <Zap size={20} className="text-primary mb-1" />
+                      <span className="text-[10px] font-bold text-white uppercase tracking-widest">
+                        Router
+                      </span>
+                    </div>
                   </div>
-                  <span className="text-xs text-primary font-medium">
-                    Router
-                  </span>
                 </div>
-                <ArrowRight size={16} className="text-primary/40" />
-                <div className="text-center">
-                  <div className="w-12 h-12 rounded-xl bg-success/10 flex items-center justify-center mx-auto mb-2">
-                    <span className="text-success text-lg">✓</span>
+
+                {/* Bottom: Execution Output */}
+                <div className="relative flex justify-center pt-6">
+                  <div className="absolute top-0 left-1/2 w-0.5 h-6 bg-success/30" />
+                  <motion.div
+                    className="absolute w-2 h-2 bg-success rounded-full blur-[1px] shadow-[0_0_8px_#10B981]"
+                    animate={{ top: ["0%", "24px"], opacity: [0, 1, 0] }}
+                    transition={{
+                      duration: 1.5,
+                      repeat: Infinity,
+                      ease: "easeOut",
+                    }}
+                  />
+
+                  <div className="px-6 py-3 rounded-xl bg-success/10 border border-success/20 flex items-center gap-3 relative z-10">
+                    <div className="w-8 h-8 rounded-full bg-success/20 flex items-center justify-center text-success">
+                      ✓
+                    </div>
+                    <div>
+                      <div className="text-sm font-bold text-white">
+                        Optimal Execution
+                      </div>
+                      <div className="text-xs text-success font-medium">
+                        0.01% Price Impact
+                      </div>
+                    </div>
                   </div>
-                  <span className="text-xs text-muted">Best Price</span>
                 </div>
               </div>
             </div>

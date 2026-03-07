@@ -62,10 +62,11 @@ export const features: Feature[] = [
 
 // ---- Metrics ----
 export const metrics: Metric[] = [
-  { label: "Token Pairs", value: "100", suffix: "+" },
-  { label: "Price Update Latency", value: "<1", suffix: "s" },
-  { label: "Faster Load Times", value: "40", suffix: "%" },
-  { label: "Liquidity Sources", value: "25", suffix: "+" },
+  { label: "Price Update Latency", description: "Sub-second decentralized price feeds", value: "<1", suffix: "s", icon: "zap" },
+  { label: "Faster Load Times", description: "Optimized initial payload and TTI", value: "40", suffix: "%", icon: "cpu" },
+  { label: "Token Pairs", description: "Aggregated across all major chains", value: "100", suffix: "+", icon: "activity" },
+  { label: "Wallet Providers", description: "Seamless multi-wallet integration", value: "5", suffix: "+", icon: "wallet" },
+  { label: "Liquidity Sources", description: "Real-time depth analysis from top DEXs", value: "25", suffix: "+", icon: "route" },
 ];
 
 // ---- Case Study ----

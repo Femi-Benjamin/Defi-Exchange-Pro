@@ -9,6 +9,8 @@ import { FeaturesSection } from "@/components/sections/features";
 import { PreviewSection } from "@/components/sections/preview";
 import { MetricsSection } from "@/components/sections/metrics";
 import { CaseStudyModal } from "@/components/sections/case-study-modal";
+import { TradingInterface } from "@/components/sections/trading-interface";
+import { GallerySection } from "@/components/sections/gallery";
 
 export default function HomePage() {
   const [caseStudyOpen, setCaseStudyOpen] = useState(false);
@@ -35,7 +37,9 @@ export default function HomePage() {
       <main className="flex-1 w-full overflow-x-hidden">
         <HeroSection />
         <ProblemSolutionSection />
+        <TradingInterface />
         <FeaturesSection />
+        <GallerySection />
         <PreviewSection />
         <MetricsSection />
       </main>

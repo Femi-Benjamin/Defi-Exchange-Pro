@@ -61,6 +61,8 @@ export interface Metric {
   value: string;
   suffix?: string;
   prefix?: string;
+  description: string;
+  icon: string;
 }
 
 // ---- Nav ----
