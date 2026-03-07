@@ -25,7 +25,7 @@ export function GalleryItem({
       className="group relative rounded-2xl glass overflow-hidden cursor-pointer"
     >
       {/* Content / Mock Screen */}
-      <div className="aspect-[16/10] relative overflow-hidden bg-surface">
+      <div className="aspect-16/10 relative overflow-hidden bg-surface">
         {children}
 
         {/* Gradient overlay on hover */}

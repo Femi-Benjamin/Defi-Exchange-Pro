@@ -53,12 +53,16 @@ export function useCryptoData() {
           throw new Error("Failed to fetch data");
         }
 
-        const result: CryptoData[] = await response.json();
+        const result = await response.json();
         
         if (isMounted) {
-          setData(result);
-          setIsLoading(false);
-          setIsUsingMockData(false);
+          if (Array.isArray(result)) {
+            setData(result);
+            setIsLoading(false);
+            setIsUsingMockData(false);
+          } else {
+            throw new Error("API returned non-array data");
+          }
         }
       } catch (err: unknown) {
         if (isMounted) {

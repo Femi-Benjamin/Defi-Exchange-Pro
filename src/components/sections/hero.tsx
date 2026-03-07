@@ -165,9 +165,7 @@ export function HeroSection() {
           {/* Badge */}
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass border-primary/20 shadow-[0_0_15px_rgba(0,240,255,0.1)] text-xs font-medium text-primary mb-8 hover:bg-white/5 transition-colors cursor-default">
             <div className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse-glow" />
-            <span className="font-semibold text-white mr-1 outline-1">
-              v2.0 Release
-            </span>
+            <span className="font-semibold text-white mr-1">v2.0 Release</span>
             Institutional Demo Live
           </div>
 

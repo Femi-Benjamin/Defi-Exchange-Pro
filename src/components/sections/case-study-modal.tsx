@@ -25,17 +25,24 @@ export function CaseStudyModal({ isOpen, onClose }: CaseStudyModalProps) {
 
           {/* Modal */}
           <motion.div
-            className="fixed inset-4 md:inset-8 lg:inset-12 z-50 flex"
+            className="fixed inset-2 sm:inset-4 md:inset-8 lg:inset-12 z-50 flex items-center justify-center"
             initial={{ opacity: 0, scale: 0.95, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
             transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
           >
-            <div className="w-full rounded-2xl glass-strong overflow-hidden flex flex-col md:flex-row">
+            <div className="w-full max-w-5xl h-[95vh] sm:h-auto sm:max-h-[95vh] rounded-2xl glass-strong overflow-hidden flex flex-col md:flex-row shadow-2xl">
               {/* Left: Animated Showcase */}
-              <div className="md:w-2/5 p-8 md:p-12 flex flex-col justify-center bg-linear-to-br from-primary/10 via-background to-secondary/10 relative overflow-hidden">
+              <div className="md:w-2/5 p-6 sm:p-8 md:p-12 flex flex-col justify-center bg-linear-to-br from-primary/10 via-background to-secondary/10 relative overflow-hidden shrink-0">
                 <div className="absolute top-0 right-0 w-64 h-64 bg-primary/10 rounded-full blur-[80px]" />
                 <div className="absolute bottom-0 left-0 w-48 h-48 bg-secondary/10 rounded-full blur-[60px]" />
+
+                <button
+                  onClick={onClose}
+                  className="absolute top-4 right-4 w-8 h-8 rounded-full bg-black/20 md:hidden flex items-center justify-center text-white z-20"
+                >
+                  <X size={16} />
+                </button>
 
                 <div className="relative z-10">
                   <motion.div
@@ -43,15 +50,17 @@ export function CaseStudyModal({ isOpen, onClose }: CaseStudyModalProps) {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.2, duration: 0.5 }}
                   >
-                    <div className="w-16 h-16 rounded-2xl gradient-primary flex items-center justify-center mb-8 glow-primary">
-                      <span className="text-[#0B0F19] text-xl font-bold">
-                        DX
-                      </span>
+                    <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-2xl glass p-2 flex items-center justify-center mb-4 sm:mb-8 glow-primary shrink-0 relative overflow-hidden">
+                      <img
+                        src="/logo.png"
+                        alt="Logo"
+                        className="w-full h-full object-contain"
+                      />
                     </div>
-                    <h2 className="text-3xl font-bold text-white mb-4 tracking-tight">
+                    <h2 className="text-2xl sm:text-3xl font-bold text-white mb-3 sm:mb-4 tracking-tight">
                       {caseStudy.title}
                     </h2>
-                    <p className="text-muted leading-relaxed mb-8">
+                    <p className="text-sm sm:text-base text-muted leading-relaxed mb-6 sm:mb-8 line-clamp-3 sm:line-clamp-none">
                       {caseStudy.subtitle}
                     </p>
 
@@ -71,9 +80,9 @@ export function CaseStudyModal({ isOpen, onClose }: CaseStudyModalProps) {
               </div>
 
               {/* Right: Scrollable Content */}
-              <div className="md:w-3/5 flex flex-col">
+              <div className="md:w-3/5 flex flex-col min-h-0 flex-1">
                 {/* Header */}
-                <div className="flex items-center justify-between px-8 py-5 border-b border-border">
+                <div className="hidden md:flex items-center justify-between px-8 py-5 border-b border-border bg-background/50 backdrop-blur-md sticky top-0 z-20">
                   <span className="text-sm font-medium text-muted">
                     Case Study
                   </span>
@@ -86,9 +95,9 @@ export function CaseStudyModal({ isOpen, onClose }: CaseStudyModalProps) {
                 </div>
 
                 {/* Scrollable Body */}
-                <div className="flex-1 overflow-y-auto p-8 space-y-8">
+                <div className="flex-1 overflow-y-auto p-5 sm:p-8 space-y-8">
                   {/* Role */}
-                  <div>
+                  <div className="pt-2 sm:pt-0">
                     <div className="text-xs font-semibold uppercase tracking-wider text-muted mb-2">
                       Role
                     </div>

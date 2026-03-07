@@ -402,7 +402,7 @@ export function TradingInterface() {
                   </AnimatePresence>
 
                   {/* Shine effect */}
-                  <div className="absolute inset-0 -translate-x-full group-hover:animate-[shimmer_1.5s_infinite] bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-12 pointer-events-none" />
+                  <div className="absolute inset-0 -translate-x-full group-hover:animate-[shimmer_1.5s_infinite] bg-linear-to-r from-transparent via-white/20 to-transparent skew-x-12 pointer-events-none" />
                 </Button>
               </div>
             </div>
