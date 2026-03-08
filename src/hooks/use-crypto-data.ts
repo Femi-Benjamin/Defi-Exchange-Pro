@@ -57,7 +57,12 @@ export function useCryptoData() {
         
         if (isMounted) {
           if (Array.isArray(result)) {
-            setData(result);
+            const normalized = normalizeApiTokens(result);
+            if (normalized.length === 0) {
+              throw new Error("API returned no usable token records");
+            }
+            setData(normalized);
+            setError(null);
             setIsLoading(false);
             setIsUsingMockData(false);
           } else {
@@ -99,6 +104,11 @@ export function useCryptoData() {
           }));
           
           setData(fallbackData);
+          setError(
+            err instanceof Error
+              ? err.message
+              : "Unable to fetch live market data",
+          );
           setIsLoading(false);
           setIsUsingMockData(true);
           // Don't set error state to avoid breaking UI, just warn in console and flag that we are using mock data
@@ -129,4 +139,64 @@ function parseVolumeStrToNumber(volStr: string | undefined): number {
   else if (volStr.toLowerCase().includes("m")) val *= 1_000_000;
   else if (volStr.toLowerCase().includes("k")) val *= 1_000;
   return val;
+}
+
+function asNumber(value: unknown, fallback = 0): number {
+  if (typeof value === "number" && Number.isFinite(value)) return value;
+  if (typeof value === "string") {
+    const parsed = Number(value);
+    if (Number.isFinite(parsed)) return parsed;
+  }
+  return fallback;
+}
+
+function asText(value: unknown, fallback = ""): string {
+  return typeof value === "string" && value.trim() ? value : fallback;
+}
+
+function normalizeApiTokens(raw: unknown[]): CryptoData[] {
+  return raw
+    .map((item, index) => {
+      if (typeof item !== "object" || item === null) return null;
+      const token = item as Partial<CryptoData>;
+      const symbol = asText(token.symbol, "UNK");
+      const name = asText(token.name, `Token ${index + 1}`);
+      const id = asText(token.id, `${symbol.toLowerCase()}-${index}`);
+
+      return {
+        id,
+        symbol,
+        name,
+        image: asText(token.image, ""),
+        current_price: asNumber(token.current_price),
+        market_cap: asNumber(token.market_cap),
+        market_cap_rank: asNumber(token.market_cap_rank),
+        fully_diluted_valuation:
+          token.fully_diluted_valuation == null
+            ? null
+            : asNumber(token.fully_diluted_valuation),
+        total_volume: asNumber(token.total_volume),
+        high_24h: asNumber(token.high_24h),
+        low_24h: asNumber(token.low_24h),
+        price_change_24h: asNumber(token.price_change_24h),
+        price_change_percentage_24h: asNumber(token.price_change_percentage_24h),
+        market_cap_change_24h: asNumber(token.market_cap_change_24h),
+        market_cap_change_percentage_24h: asNumber(
+          token.market_cap_change_percentage_24h,
+        ),
+        circulating_supply: asNumber(token.circulating_supply),
+        total_supply:
+          token.total_supply == null ? null : asNumber(token.total_supply),
+        max_supply: token.max_supply == null ? null : asNumber(token.max_supply),
+        ath: asNumber(token.ath),
+        ath_change_percentage: asNumber(token.ath_change_percentage),
+        ath_date: asText(token.ath_date, ""),
+        atl: asNumber(token.atl),
+        atl_change_percentage: asNumber(token.atl_change_percentage),
+        atl_date: asText(token.atl_date, ""),
+        roi: null,
+        last_updated: asText(token.last_updated, new Date().toISOString()),
+      } satisfies CryptoData;
+    })
+    .filter((token): token is CryptoData => token !== null);
 }
